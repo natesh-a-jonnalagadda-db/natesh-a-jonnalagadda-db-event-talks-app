@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Event Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-container label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .search-container input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 250px;
+            max-width: 80%;
+        }
+        .schedule-item {
+            background-color: #e9ecef;
+            border-left: 5px solid #007bff;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .schedule-item.break {
+            border-left: 5px solid #ffc107;
+            background-color: #fff3cd;
+        }
+        .schedule-time {
+            font-weight: bold;
+            color: #0056b3;
+            flex: 0 0 120px; /* Fixed width for time */
+            margin-right: 20px;
+        }
+        .schedule-details {
+            flex-grow: 1;
+        }
+        .schedule-details h2 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 1.3em;
+        }
+        .schedule-details p {
+            margin: 5px 0;
+        }
+        .speakers, .category {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .speakers strong, .category strong {
+            color: #333;
+        }
+        .description {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>1-Day Tech Talks Event Schedule</h1>
+
+        <div class="search-container">
+            <label for="categorySearch">Search by Category:</label>
+            <input type="text" id="categorySearch" placeholder="e.g., AI, Web, Cloud">
+        </div>
+
+        <div id="schedule"></div>
+    </div>
+
+    <script>
+        const talksData = [
+            {
+                type: "talk",
+                id: "talk-1",
+                title: "The Future of AI in Everyday Life",
+                speakers: ["Dr. Ava Sharma"],
+                category: ["AI", "Innovation"],
+                duration: 60,
+                description: "Explore the transformative potential of artificial intelligence and its integration into our daily routines.",
+                startTime: "10:00 AM",
+                endTime: "11:00 AM"
+            },
+            {
+                type: "transition",
+                id: "transition-1",
+                title: "Transition Break",
+                duration: 10,
+                startTime: "11:00 AM",
+                endTime: "11:10 AM"
+            },
+            {
+                type: "talk",
+                id: "talk-2",
+                title: "Building Scalable Web Applications with Node.js",
+                speakers: ["Mr. Ben Carter", "Ms. Chloe Davis"],
+                category: ["Web Development", "Node.js", "Backend"],
+                duration: 60,
+                description: "A deep dive into best practices and advanced patterns for creating high-performance Node.js applications.",
+                startTime: "11:10 AM",
+                endTime: "12:10 PM"
+            },
+            {
+                type: "transition",
+                id: "transition-2",
+                title: "Transition Break",
+                duration: 10,
+                startTime: "12:10 PM",
+                endTime: "12:20 PM"
+            },
+            {
+                type: "talk",
+                id: "talk-3",
+                title: "Cloud Native Architectures: A Practical Guide",
+                speakers: ["Dr. David Lee"],
+                category: ["Cloud Computing", "Architecture", "DevOps"],
+                duration: 60,
+                description: "Learn how to design, build, and operate resilient, scalable applications in the cloud.",
+                startTime: "12:20 PM",
+                endTime: "01:20 PM"
+            },
+            {
+                type: "break",
+                id: "lunch-break",
+                title: "Lunch Break",
+                duration: 60,
+                description: "Enjoy a delicious lunch and network with fellow attendees!",
+                startTime: "01:20 PM",
+                endTime: "02:20 PM"
+            },
+            {
+                type: "transition",
+                id: "transition-3",
+                title: "Transition Break",
+                duration: 10,
+                startTime: "02:20 PM",
+                endTime: "02:30 PM"
+            },
+            {
+                type: "talk",
+                id: "talk-4",
+                title: "Introduction to Quantum Computing",
+                speakers: ["Prof. Elena Petrova"],
+                category: ["Quantum Computing", "Future Tech"],
+                duration: 60,
+                description: "An accessible introduction to the principles of quantum mechanics and their application in computation.",
+                startTime: "02:30 PM",
+                endTime: "03:30 PM"
+            },
+            {
+                type: "transition",
+                id: "transition-4",
+                title: "Transition Break",
+                duration: 10,
+                startTime: "03:30 PM",
+                endTime: "03:40 PM"
+            },
+            {
+                type: "talk",
+                id: "talk-5",
+                title: "Mastering Modern Frontend Frameworks",
+                speakers: ["Ms. Fiona Green"],
+                category: ["Frontend", "Web Development", "JavaScript"],
+                duration: 60,
+                description: "A comprehensive overview of the latest trends and best practices in frontend development using popular frameworks.",
+                startTime: "03:40 PM",
+                endTime: "04:40 PM"
+            },
+            {
+                type: "transition",
+                id: "transition-5",
+                title: "Transition Break",
+                title: "Transition Break",
+                duration: 10,
+                startTime: "04:40 PM",
+                endTime: "04:50 PM"
+            },
+            {
+                type: "talk",
+                id: "talk-6",
+                title: "Securing Your Applications: A Developer's Perspective",
+                speakers: ["Mr. George Black"],
+                category: ["Security", "Development", "Best Practices"],
+                duration: 60,
+                description: "Essential security considerations and practical tips for developers to build more secure applications.",
+                startTime: "04:50 PM",
+                endTime: "05:50 PM"
+            }
+        ];
+
+        const scheduleDiv = document.getElementById('schedule');
+        const searchInput = document.getElementById('categorySearch');
+
+        function renderSchedule(filter = '') {
+            scheduleDiv.innerHTML = ''; // Clear current schedule
+            const lowerCaseFilter = filter.toLowerCase();
+
+            talksData.forEach(item => {
+                // Skip transitions from rendering, they are just for timing calculations
+                if (item.type === 'transition') {
+                    return;
+                }
+
+                const matchesFilter = item.type === 'break' || (
+                    item.category && item.category.some(cat => cat.toLowerCase().includes(lowerCaseFilter))
+                );
+
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('schedule-item');
+                if (!matchesFilter) {
+                    itemElement.classList.add('hidden');
+                }
+                if (item.type === 'break') {
+                    itemElement.classList.add('break');
+                }
+
+                let detailsHtml = '';
+                if (item.type === 'talk') {
+                    detailsHtml = `
+                        <h2>${item.title}</h2>
+                        <p class="speakers"><strong>Speakers:</strong> ${item.speakers.join(', ')}</p>
+                        <p class="category"><strong>Category:</strong> ${item.category.join(', ')}</p>
+                        <p class="description">${item.description}</p>
+                    `;
+                } else if (item.type === 'break') {
+                    detailsHtml = `
+                        <h2>${item.title}</h2>
+                        <p class="description">${item.description}</p>
+                    `;
+                }
+
+
+                itemElement.innerHTML = `
+                    <div class="schedule-time">${item.startTime} - ${item.endTime}</div>
+                    <div class="schedule-details">
+                        ${detailsHtml}
+                    </div>
+                `;
+                scheduleDiv.appendChild(itemElement);
+            });
+        }
+
+        searchInput.addEventListener('keyup', (event) => {
+            renderSchedule(event.target.value);
+        });
+
+        // Initial render
+        renderSchedule();
+    </script>
+</body>
+</html>
