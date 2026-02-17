@@ -1,0 +1,15 @@
+# Node.js
+node_modules/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+*.sublime-*
+*.vscode
+*.idea
+
+# Temporary files
+*~
+#*#
+.temp/
+.tmp/
